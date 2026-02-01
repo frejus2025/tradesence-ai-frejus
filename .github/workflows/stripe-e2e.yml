@@ -1,28 +1,8 @@
-name: Stripe E2E Tests
-
-on:
-  workflow_dispatch:
-
-jobs:
-  stripe-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install Stripe CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libssl3
-          curl -L https://github.com/stripe/stripe-cli/releases/latest/download/stripe_amd64.deb -o stripe.deb
-          sudo dpkg -i stripe.deb || sudo apt-get install -f -y
-          sudo ln -s /usr/local/bin/stripe /usr/bin/stripe || true
-
-      - name: Run Stripe Tests
-        env:
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_KEY }}
-        run: |
-          echo "Running Stripe E2E tests..."
-          /usr/local/bin/stripe --version
-          # Add your test commands here
+- name: Run Stripe Tests
+  env:
+    STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_KEY }}
+  run: |
+    echo "Running Stripe E2E tests..."
+    export PATH="/usr/bin:$PATH"
+    which stripe
+    stripe --version
