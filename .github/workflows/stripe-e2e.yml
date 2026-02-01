@@ -13,11 +13,13 @@ jobs:
 
       - name: Install Stripe CLI
         run: |
-          curl -L https://stripe-cli.github.io/install.sh | bash
+          sudo apt-get update
+          sudo apt-get install -y stripe
 
       - name: Run Stripe Tests
         env:
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_KEY }}
         run: |
           echo "Running Stripe E2E tests..."
+          stripe --version
           # Add your test commands here
