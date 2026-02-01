@@ -13,8 +13,8 @@ jobs:
 
       - name: Install Stripe CLI
         run: |
-          sudo apt-get update
-          sudo apt-get install -y stripe
+          curl -L https://github.com/stripe/stripe-cli/releases/latest/download/stripe_amd64.deb -o stripe.deb
+          sudo dpkg -i stripe.deb || sudo apt-get install -f -y
 
       - name: Run Stripe Tests
         env:
